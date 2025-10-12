@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Evolution - Diseño y Estrategia</title>
+    <!-- Carga de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Definición de colores base y animaciones (Nueva Paleta: Violeta/Cyan) */
+        :root {
+            --color-dark: #070217; /* Más oscuro para profesionalismo */
+            --color-accent-purple: #a855f7; /* Violeta/Magenta vibrante */
+            --color-accent-teal: #22d3ee;   /* Cyan Eléctrico */
+            --color-card-bg: #161B22; /* Fondo de cartas para contraste (usado solo en pilares) */
+        }
+        
+        /* Animación de fondo de movimiento profundo y patrón de rejilla */
+        @keyframes subtle-shift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .motion-bg {
+            background-color: var(--color-dark);
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            /* Patrón de rejilla sutil */
+            background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px), 
+                              linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: subtle-shift 120s linear infinite; /* Animación de fondo muy lenta */
+        }
+
+        /* Estilo para el efecto de máquina de escribir (typing effect) */
+        .typing-cursor {
+            border-right: 0.15em solid var(--color-accent-teal); /* Cursor Cyan */
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--color-accent-teal); }
+        }
+
+        /* Estilo para el botón CTA con brillo (Ahora en Violeta) */
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.6); /* Sombra Violeta */
+            background-color: var(--color-accent-purple);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 1);
+            background-color: #9333ea; /* Violeta más brillante en hover */
+        }
+        
+        /* Estilo específico para el botón de WhatsApp */
+        .whatsapp-button {
+            background-color: #25D366; /* Verde de WhatsApp */
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.8);
+        }
+        .whatsapp-button:hover {
+            background-color: #128C7E; /* Verde más oscuro en hover */
+            box-shadow: 0 0 25px rgba(37, 211, 102, 1.2);
+            transform: translateY(-3px) scale(1.03);
+        }
+
+        /* Animación para el SVG del logo */
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 5px var(--color-accent-teal)); }
+            50% { filter: drop-shadow(0 0 15px var(--color-accent-teal)); }
+        }
+        .logo-svg-animation {
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+        }
+
+        /* Clase para las cartas de los pilares con fondo oscuro y borde de highlight Cyan */
+        .pillar-card {
+            background-color: var(--color-card-bg);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+            border-color: #30363D;
+        }
+        .pillar-card:hover {
+            border-color: var(--color-accent-teal) !important; /* Borde Cyan en hover */
+        }
+
+        /* Animación de órbita para los puntos */
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(40px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+        }
+        .orbiting-point {
+            transform-origin: 50px 50px; /* Centro de rotación del grupo SVG */
+            animation: orbit 10s linear infinite;
+        }
+
+        /* Estilo para el wizard/entrevista - Uso de display para prevenir problemas de foco */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .form-step {
+            min-height: 400px; /* Asegura que el paso tenga altura constante */
+            display: none; /* Oculto por defecto para evitar superposición */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+        .form-step.active {
+            display: flex; /* Mostrar solo el activo */
+            animation: fadeIn 0.5s forwards; /* Animación de entrada suave */
+        }
+        
+        /* Estilo minimalista para los inputs en el modo "entrevista" */
+        .wizard-input, .wizard-textarea {
+            background-color: #0F0A1F;
+            border: none;
+            border-bottom: 2px solid #374151; /* Línea inferior sutil */
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            padding-bottom: 8px; /* Espacio para la línea */
+        }
+
+        .wizard-input:focus, .wizard-textarea:focus {
+            background-color: #1a1529; /* Ligero cambio de color al enfocar */
+            border-color: var(--color-accent-purple); /* Borde violeta al enfocar */
+            outline: none;
+            box-shadow: 0 2px 0 0 var(--color-accent-purple);
+        }
+
+        .step-question {
+            font-size: 2.5rem; /* Título grande */
+            font-weight: 800;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            text-align: center;
+            color: white;
+        }
+
+        /* Estilo para los botones de selección de estilo (Step 2) */
+        .style-btn {
+            background-color: #2D2447; /* Púrpura oscuro sutil */
+            color: #d1c4e9;
+            padding: 10px 18px;
+            border-radius: 9999px; /* Píldora */
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .style-btn:hover {
+            background-color: #3e325c;
+            transform: translateY(-1px);
+        }
+
+        .style-btn.selected {
+            background-color: var(--color-accent-purple); /* Fondo Violeta Activo */
+            color: white;
+            border-color: var(--color-accent-teal); /* Borde Cyan para contraste */
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.5); /* Resplandor Cyan */
+        }
+        
+        /* ======================================================= */
+        /* ESTILOS PARA ENTREGABLES (Diseño Minimalista sin Marcos) */
+        /* ======================================================= */
+
+        /* Animación de entrada escalonada (Staggered Fade-in) */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stagger-item {
+            opacity: 0;
+            /* Aplicado por JS en la clase 'active' para iniciar la animación */
+            animation: slideInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+        }
+
+        /* Estilo para los elementos individuales de la lista (Minimalista) */
+        .deliverable-item {
+            background-color: transparent; /* Fondo transparente */
+            border-radius: 0.5rem; 
+            transition: background-color 0.2s, transform 0.1s;
+            cursor: default; /* No es un botón, es una lista */
+        }
+        .deliverable-item:hover {
+            background-color: #110c26; /* Fondo oscuro sutil al pasar el mouse */
+            transform: translateX(5px); /* Pequeño desplazamiento a la derecha */
+        }
+        
+        .deliverable-icon {
+            color: var(--color-accent-teal); /* Iconos Cian */
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        /* Estilo para el separador de categorías (Degradado) */
+        .category-separator {
+            height: 2px;
+            background: linear-gradient(to right, var(--color-accent-purple), var(--color-accent-teal));
+            margin: 3rem 0 2rem 0; /* Espaciado antes y después */
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .step-question {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="motion-bg text-white flex flex-col items-center w-full min-h-screen">
+    
+    <!-- Contenedor Principal Centrado con Estructura de Marketing --><main class="w-full flex flex-col items-center flex-grow p-6 md:p-10">
+        
+        <!-- VISTA DE LANDING PAGE (Inicialmente visible) -->
+        <div id="landing-page-view" class="z-10 max-w-7xl w-full p-0 space-y-12">
+            
+            <!-- SECCIÓN 1: HEADLINE Y CTA (Enfoque en el Valor) --><header class="rounded-2xl p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
+                
+                <!-- Texto de Marketing y Propuesta de Valor --><div class="lg:w-3/5 w-full text-center lg:text-left space-y-4">
+                    <p class="text-sm font-semibold text-cyan-400 uppercase tracking-widest">Estrategia | Desarrollo | Lanzamiento</p>
+                    
+                    <!-- Título Principal (con efecto de máquina de escribir y degradado Cyan/Violeta) --><h1 id="main-title" class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter leading-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-violet-400">
+                        <!-- El texto inicial será inyectado por JS --></h1>
+                    
+                    <!-- Subtítulo de Marketing --><p id="subtexts" class="text-xl md:text-2xl pt-2 text-gray-400 opacity-0 transition-opacity duration-1000 ease-in">
+                        Tu marca es más que un logo. Es una estrategia completa lista para dominar el mercado digital, basada en la precisión.
+                    </p>
+
+                    <!-- CTA Principal -->
+                    <div class="pt-8">
+                        <!-- Clases de sombra y hover actualizadas a violeta -->
+                        <button id="cta-button" class="cta-button text-white font-bold py-3 px-10 rounded-lg text-lg uppercase transition-all shadow-xl hover:shadow-violet-500/80 w-full md:w-auto">
+                            Comienza a Pulir tu Proyecto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gráfico Conceptual (SVG de un Mundo/Globo animado más complejo) --><div class="lg:w-2/5 w-full flex justify-center items-center mt-8 lg:mt-0">
+                    <svg class="logo-svg-animation w-36 h-36 md:w-56 md:h-56 text-cyan-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <!-- Degradado Cyan y Violeta -->
+                            <linearGradient id="glowGradientPro" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--color-accent-teal);stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:var(--color-accent-purple);stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- GRUPO PRINCIPAL (Rotación lenta del esqueleto y continentes) --><g id="rotating-globe-group">
+                            <!-- Contorno principal --><circle cx="50" cy="50" r="45" stroke="url(#glowGradientPro)" stroke-width="1.5" fill="none" opacity="0.4"/>
+                            
+                            <!-- Continentes simplificados (formas geométricas abstractas) --><path d="M25 35 C 20 25, 30 20, 40 25 C 45 30, 35 40, 25 35 Z" fill="url(#glowGradientPro)" opacity="0.7"/>
+                            <path d="M60 40 C 65 30, 75 35, 70 45 C 65 50, 55 45, 60 40 Z" fill="url(#glowGradientPro)" opacity="0.7"/>
+                            <path d="M35 60 C 30 55, 40 50, 50 55 C 55 60, 45 65, 35 60 Z" fill="url(#glowGradientPro)" opacity="0.7"/>
+                            <path d="M70 65 C 65 60, 75 60, 80 70 C 75 75, 65 70, 70 65 Z" fill="url(#glowGradientPro)" opacity="0.7"/>
+
+                            <!-- GRUPO WIREFRAME (Rotación más rápida para complexity) --><g id="rotating-wireframe-group">
+                                <!-- Líneas de Latitud y Longitud más complejas y densas -->
+                                <line x1="5" y1="50" x2="95" y2="50" stroke="url(#glowGradientPro)" stroke-width="0.8" opacity="0.6"/> <!-- Ecuador -->
+                                
+                                <ellipse cx="50" cy="50" rx="40" ry="45" stroke="url(#glowGradientPro)" stroke-width="0.8" opacity="0.6" fill="none"/> <!-- Meridiano Principal 1 -->
+                                <ellipse cx="50" cy="50" rx="45" ry="30" stroke="url(#glowGradientPro)" stroke-width="0.8" opacity="0.6" fill="none"/> <!-- Paralelo Superior -->
+                                <ellipse cx="50" cy="50" rx="45" ry="30" stroke="url(#glowGradientPro)" stroke-width="0.8" opacity="0.6" fill="none" transform="rotate(90 50 50)"/> <!-- Meridiano Principal 2 -->
+                                <ellipse cx="50" cy="50" rx="45" ry="15" stroke="url(#glowGradientPro)" stroke-width="0.8" opacity="0.6" fill="none"/> <!-- Paralelo Inferior -->
+                                
+                                <!-- Más líneas para densidad -->
+                                <ellipse cx="50" cy="50" rx="30" ry="45" stroke="url(#glowGradientPro)" stroke-width="0.5" opacity="0.5" fill="none"/>
+                                <ellipse cx="50" cy="50" rx="45" ry="40" stroke="url(#glowGradientPro)" stroke-width="0.5" opacity="0.5" fill="none"/>
+
+                                <!-- Animación de rotación RÁPIDA (30s) para el wireframe -->
+                                <animateTransform 
+                                    attributeName="transform" 
+                                    attributeType="XML"
+                                    type="rotate"
+                                    from="0 50 50" 
+                                    to="360 50 50" 
+                                    dur="30s" 
+                                    repeatCount="indefinite"
+                                />
+                            </g>
+                            
+                            <!-- Animación de rotación LENTA (60s) para el grupo principal --><animateTransform 
+                                attributeName="transform" 
+                                attributeType="XML"
+                                type="rotate"
+                                from="0 50 50" 
+                                to="360 50 50" 
+                                dur="60s" 
+                                repeatCount="indefinite"
+                            />
+                        </g>
+
+                        <!-- Puntos orbitando alrededor del globo para un toque de "conexión" (usando colores Cyan/Violeta) -->
+                        <circle cx="50" cy="50" r="2" fill="var(--color-accent-teal)" class="orbiting-point" style="animation-delay: 0s;"/>
+                        <circle cx="50" cy="50" r="2" fill="var(--color-accent-purple)" class="orbiting-point" style="animation-delay: -5s; animation-duration: 8s;"/>
+                        <circle cx="50" cy="50" r="2" fill="var(--color-accent-teal)" class="orbiting-point" style="animation-delay: -2s; animation-duration: 12s;"/>
+                    </svg>
+                </div>
+                
+            </header>
+
+            <!-- HR con Sombra Sutil --><hr class="border-gray-700/50 shadow-md shadow-gray-700/10 max-w-[80%] mx-auto my-12">
+
+            <!-- SECCIÓN 2: PILARES (Estilo Caja de Información Sofisticada) --><section class="text-center">
+                <!-- Título de la sección --><h2 class="text-3xl md:text-4xl font-bold mb-8 text-gray-100">Nuestro Proceso de Marca Completo</h2>
+                
+                <!-- Grid: 1 columna en móvil, 3 columnas en tablet y PC --><div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    
+                    <!-- Pilar 1: Estrategia -->
+                    <div class="pillar-card p-6 rounded-xl border border-gray-700 transition duration-300 hover:scale-[1.03] hover:border-cyan-400">
+                        <span class="text-3xl mb-3 inline-block text-cyan-400">★</span>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-100">Estrategia y Fundamento</h3>
+                        <p class="text-gray-400 text-sm">Define tu ADN, público objetivo y propuesta de valor única para asegurar que cada diseño tenga un propósito.</p>
+                    </div>
+                    
+                    <!-- Pilar 2: Identidad Visual -->
+                    <div class="pillar-card p-6 rounded-xl border border-gray-700 transition duration-300 hover:scale-[1.03] hover:border-cyan-400">
+                        <span class="text-3xl mb-3 inline-block text-cyan-400">🎨</span>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-100">Diseño de Logo Profesional</h3>
+                        <p class="text-gray-400 text-sm">Creación de un sistema gráfico escalable, desde el logo hasta la tipografía y paleta de colores corporativos.</p>
+                    </div>
+                    
+                    <!-- Pilar 3: Activación -->
+                    <div class="pillar-card p-6 rounded-xl border border-gray-700 transition duration-300 hover:scale-[1.03] hover:border-cyan-400">
+                        <span class="text-3xl mb-3 inline-block text-cyan-400">🚀</span>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-100">Activación y Lanzamiento</h3>
+                        <p class="text-gray-400 text-sm">Te entregamos las herramientas necesarias para lanzar y mantener tu marca con coherencia en todos los canales.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        
+        <!-- VISTA DE FORMULARIO (Inicialmente OCULTA) -->
+        <div id="form-view" class="hidden z-10 max-w-4xl w-full p-4 md:p-8">
+            <div class="relative min-h-[500px] flex flex-col justify-between">
+                
+                <!-- Encabezado Fijo del Wizard -->
+                <div class="text-center pb-4 mb-8 px-4 md:px-10">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">
+                        Entrevista Inicial de Marca
+                    </h2>
+                    <!-- Barra de Progreso Centrada y Estilizada -->
+                    <div id="progress-bar-container" class="mt-4 w-full max-w-sm mx-auto">
+                        <div class="h-2 w-full bg-gray-800 rounded-full overflow-hidden shadow-inner shadow-black/50">
+                            <!-- progress-fill se actualiza con JS para el porcentaje y el efecto de iluminación -->
+                            <div id="progress-fill" class="h-full rounded-full transition-all duration-500 ease-out"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenedor de Pasos (Wizard) -->
+                <div id="brief-wizard" class="flex-grow flex flex-col items-center justify-center">
+                    
+                    <!-- PASO 1: Nombre de la Marca (Requerido) -->
+                    <div class="form-step active" data-step="1">
+                        <h3 class="step-question">¿Cuál es el nombre exacto de tu marca? <span class="text-violet-400">*</span></h3>
+                        <input type="text" id="brand-name" name="brand-name" required 
+                               class="wizard-input w-full max-w-lg p-3 text-2xl md:text-3xl text-white">
+                    </div>
+
+                    <!-- PASO 2: Estilo y Personalidad (REEMPLAZADO POR BOTONES) -->
+                    <div class="form-step" data-step="2">
+                        <h3 class="step-question">Selecciona los **Estilos Clave** para tu Logo y Marca. <span class="text-violet-400">*</span></h3>
+                        <div id="style-buttons-container" class="flex flex-wrap justify-center gap-3 max-w-4xl">
+                            <!-- Botones de selección de estilo (clase style-btn y función selectStyle) -->
+                            <button type="button" class="style-btn" data-style="Minimalista" onclick="selectStyle(this)">Minimalista</button>
+                            <button type="button" class="style-btn" data-style="Moderno" onclick="selectStyle(this)">Moderno</button>
+                            <button type="button" class="style-btn" data-style="Orgánico" onclick="selectStyle(this)">Orgánico / Natural</button>
+                            <button type="button" class="style-btn" data-style="Clásico" onclick="selectStyle(this)">Clásico / Elegante</button>
+                            <button type="button" class="style-btn" data-style="Audaz" onclick="selectStyle(this)">Audaz / Agresivo</button>
+                            <button type="button" class="style-btn" data-style="Tecnológico" onclick="selectStyle(this)">Tecnológico / Futurista</button>
+                            <button type="button" class="style-btn" data-style="Lúdico" onclick="selectStyle(this)">Lúdico / Amigable</button>
+                            <button type="button" class="style-btn" data-style="Lujoso" onclick="selectStyle(this)">Lujoso / Premium</button>
+                        </div>
+                        <!-- Campo oculto requerido para almacenar la selección y manejar la validación/envío -->
+                        <input type="hidden" id="style-selection" name="style-selection" required value="">
+                        <p class="text-gray-500 text-center mt-6 text-sm">Puedes seleccionar uno o varios estilos haciendo clic.</p>
+                    </div>
+
+                    <!-- PASO 3: Colores Clave (Opcional) -->
+                    <div class="form-step" data-step="3">
+                        <h3 class="step-question">¿Hay **Colores Clave** definidos para tu identidad? (Opcional)</h3>
+                        <input type="text" id="colors" name="colors"
+                               class="wizard-input w-full max-w-xl p-3 text-2xl md:text-3xl text-white"
+                               placeholder="Ej: Azul Marino y Dorado / #1A2B3C y #D4AF37">
+                    </div>
+                    
+                    <!-- PASO 4: Sector o Nicho de Mercado (Requerido) -->
+                    <div class="form-step" data-step="4">
+                        <h3 class="step-question">¿A qué **Sector o Nicho de Mercado** pertenece tu proyecto? <span class="text-violet-400">*</span></h3>
+                        <input type="text" id="sector" name="sector" required
+                               class="wizard-input w-full max-w-xl p-3 text-2xl md:text-3xl text-white" 
+                               placeholder="Ej: Tecnología B2B, Moda Sostenible, Consultoría Financiera.">
+                    </div>
+
+                    <!-- PASO 5: Brief Adicional (Ideas, Referencias, Competidores) -->
+                    <div class="form-step" data-step="5">
+                        <h3 class="step-question">Comparte cualquier **Brief Adicional**, referencias o competidores.</h3>
+                        <textarea id="brief-adicional" name="brief-adicional" rows="4"
+                                  class="wizard-textarea w-full max-w-3xl p-4 text-xl md:text-2xl text-white" 
+                                  placeholder="Incluye enlaces, ideas clave, o lo que NO quieres que hagamos."></textarea>
+                    </div>
+
+                </div>
+
+                <!-- Controles de Navegación Fijos -->
+                <div class="flex justify-between gap-4 pt-8 mt-auto px-4 md:px-10">
+                    <!-- Botón Anterior -->
+                    <button id="prev-step-button" onclick="prevStep()" class="text-gray-400 hover:text-white font-bold py-2 px-6 rounded-lg transition-all border border-gray-700 hover:border-cyan-400 w-1/3 md:w-auto" style="visibility: hidden;">
+                        ← Anterior
+                    </button>
+                    
+                    <!-- Botón Siguiente (oculto en el último paso) -->
+                    <button id="next-step-button" onclick="nextStep()" class="cta-button text-white font-bold py-2 px-6 rounded-lg uppercase transition-all shadow-md w-2/3 md:w-auto">
+                        Siguiente Pregunta
+                    </button>
+
+                    <!-- Botón Enviar (solo visible en el último paso) -->
+                    <button id="submit-brief-button" class="cta-button text-white font-bold py-2 px-6 rounded-lg uppercase transition-all shadow-md w-2/3 md:w-auto hidden" onclick="submitBrief()">
+                        Ver Entregables Finales
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- VISTA DE ENTREGABLES (ACTUALIZADA con Diseño Impresionante y SIN Botón de WhatsApp) -->
+        <div id="deliverables-view" class="hidden z-10 max-w-7xl w-full p-4 md:p-8 text-center animate-fadeIn">
+            
+            <!-- Encabezado de Alto Impacto REDISEÑADO -->
+            <header class="mb-12">
+                <span class="block text-xl md:text-2xl font-medium text-violet-400 uppercase tracking-widest">Activación Estratégica & Arsenal de Marca:</span>
+                <h2 class="text-5xl md:text-7xl font-extrabold leading-none tracking-tighter mt-2">
+                    <!-- Uso de degradado en el texto para un look más "tecnológico" -->
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-violet-400">
+                        TU MARCA. LISTA PARA DOMINAR.
+                    </span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-300 mt-6 max-w-3xl mx-auto">
+                    Recibe los activos de diseño y el mapa de ruta digital necesarios para lanzar una marca con **autoridad** y **precisión**.
+                </p>
+            </header>
+
+            <!-- Grid de Entregables (2 Columnas en Desktop) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10 text-left max-w-5xl mx-auto">
+                
+                <!-- Columna 1: Identidad Central y Estrategia -->
+                <div class="lg:col-span-1 space-y-10">
+                    
+                    <!-- SECCIÓN 1: IDENTIDAD CENTRAL (Ahora es un bloque de texto y lista FLUIDO) -->
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4 text-cyan-400 flex items-center">
+                            <span class="text-4xl mr-3">💎</span> 01. Identidad Central
+                        </h3>
+                        <!-- Lista con línea sutil a la izquierda para agrupar -->
+                        <ul class="space-y-4 text-gray-300 pl-6 pt-2 pb-2 border-l-2 border-violet-500/50">
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.1s;"><span class="text-violet-400 mr-3">→</span> **Logo** (Diseño Principal para uso general)</li>
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.2s;"><span class="text-violet-400 mr-3">→</span> **Imagotipo** (Texto + Icono, para encabezados y firmas)</li>
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.3s;"><span class="text-violet-400 mr-3">→</span> **Isotipo** (Solo Icono, perfecto para favicons y perfiles sociales)</li>
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.4s;"><span class="text-violet-400 mr-3">→</span> **Isologo** (Texto Integrado al Símbolo)</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- SECCIÓN 2: ESTRATEGIA Y ARCHIVOS (Bloque de texto y lista FLUIDO) -->
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4 text-violet-400 flex items-center">
+                            <span class="text-4xl mr-3">📚</span> 02. Estrategia y Archivos Maestros
+                        </h3>
+                        <ul class="space-y-4 text-gray-300 pl-6 pt-2 pb-2 border-l-2 border-cyan-500/50">
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.5s;"><span class="text-cyan-400 mr-3">✓</span> **Manual de Marca** (Guía de Uso Total y tono de voz)</li>
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.6s;"><span class="text-cyan-400 mr-3">✓</span> **Paleta de Colores** (Códigos Hex/RGB/CMYK)</li>
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.7s;"><span class="text-cyan-400 mr-3">✓</span> Archivos **Vectoriales** (.AI, .SVG)</li>
+                            <li class="flex items-center stagger-item" style="animation-delay: 0.8s;"><span class="text-cyan-400 mr-3">✓</span> Archivos **PNG** (Alta Resolución y Fondo Transparente)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Activación (Ahora también fluid) -->
+                <div class="lg:col-span-1">
+                    <!-- SECCIÓN 3: ACTIVACIÓN DIGITAL (Bloque de texto y lista FLUIDO) -->
+                    <div>
+                        <h3 class="text-3xl md:text-4xl font-extrabold mb-6 text-cyan-300 flex items-center">
+                            <span class="text-5xl mr-3">🚀</span> 03. Activación Digital
+                        </h3>
+                        <ul class="space-y-4 text-lg text-gray-200 pl-6 pt-2 pb-2 border-l-2 border-violet-500/50">
+                            <li class="flex items-start stagger-item" style="animation-delay: 0.9s;"><span class="text-violet-400 text-2xl mr-3 flex-shrink-0">●</span> Diseño de **Tarjeta de Presentación**</li>
+                            <li class="flex items-start stagger-item" style="animation-delay: 1.0s;"><span class="text-violet-400 text-2xl mr-3 flex-shrink-0">●</span> **Portadas** para Redes Sociales (Ajuste por plataforma)</li>
+                            <li class="flex items-start stagger-item" style="animation-delay: 1.1s;"><span class="text-violet-400 text-2xl mr-3 flex-shrink-0">●</span> **3 Plantillas** Editables para Publicaciones Sociales</li>
+                            <li class="flex items-start stagger-item" style="animation-delay: 1.2s;"><span class="text-violet-400 text-2xl mr-3 flex-shrink-0">●</span> Video **Motion Graphic** (Introductorio de 5-10 segundos)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Botón de WhatsApp para enviar el Brief Final (Último CTA) -->
+            <div class="mt-12 max-w-lg mx-auto">
+                 <button onclick="sendToWhatsApp()" 
+                         class="whatsapp-button text-white font-bold py-4 px-10 rounded-xl text-xl uppercase transition-all w-full flex items-center justify-center space-x-3 hover:shadow-green-500/80">
+                    <!-- Icono de WhatsApp (Inline SVG) -->
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.0003 2.00025C6.48031 2.00025 2.00031 6.48025 2.00031 12.0003C2.00031 14.1203 2.68031 16.1103 3.86031 17.7203L2.57031 22.1403L7.15031 20.8803C8.75031 21.8403 10.3903 22.0003 12.0003 22.0003H12.0103C17.5203 22.0003 22.0003 17.5203 22.0003 12.0003C22.0003 6.48025 17.5203 2.00025 12.0003 2.00025ZM16.0303 15.6503C15.8203 16.0003 15.1903 16.3203 14.6103 16.3503C14.0303 16.3803 13.5103 16.3803 12.9303 16.1403C11.3803 15.5403 10.0503 14.2103 9.45031 12.6603C9.21031 12.0803 9.21031 11.5603 9.24031 10.9803C9.27031 10.4003 9.59031 9.77025 9.94031 9.56025C10.1503 9.43025 10.3603 9.40025 10.5403 9.40025C10.7403 9.40025 10.9503 9.42025 11.1603 9.45025C11.3403 9.48025 11.4503 9.47025 11.5303 9.68025C11.8403 10.4403 12.4303 11.8403 12.5103 12.0003C12.5903 12.1603 12.5503 12.2703 12.4203 12.4403C12.3003 12.5903 12.2003 12.7103 12.0803 12.8603C11.9703 13.0103 11.8503 13.1303 11.7703 13.2603C11.6903 13.3903 11.6303 13.4803 11.7703 13.6303C11.9003 13.7803 12.2103 14.0003 12.4703 14.2303C12.7203 14.4503 13.0603 14.7403 13.3703 14.9903C13.6803 15.2403 13.9203 15.4603 14.1203 15.6303C14.3203 15.8003 14.5003 15.9003 14.7003 16.0003C14.9003 16.1003 15.0603 16.0803 15.3403 16.0303C15.6203 15.9803 16.0003 15.7903 16.1603 15.5403C16.3203 15.2903 16.3203 15.0803 16.2703 15.0003C16.2203 14.9203 16.0903 14.8603 15.9603 14.8003C15.8303 14.7403 15.6803 14.6703 15.5803 14.6503Z" fill="white"/>
+                    </svg>
+                    <span>Enviar Brief por WhatsApp</span>
+                 </button>
+                 <p class="text-gray-500 text-sm mt-4">Toda la información de tu proyecto será enviada a nuestro equipo para revisión.</p>
+            </div>
+            
+        </div>
+        
+    </main>
+
+    <!-- FOOTER SIMPLE --><footer class="w-full max-w-7xl text-center py-6 text-gray-500 text-sm mt-auto">
+        <hr class="border-gray-800 mb-4"/>
+        <p>&copy; 2025 ibamark. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="text/javascript">
+        // ====================================================================
+        // CONFIGURACIÓN Y LÓGICA DE LA LANDING PAGE
+        // ====================================================================
+        
+        // ** NÚMERO DE WHATSAPP ACTUALIZADO **
+        const WHATSAPP_NUMBER = "5572365913"; 
+
+        const titleElement = document.getElementById('main-title');
+        const subtextsElement = document.getElementById('subtexts');
+        const textToType = 'Diseña tu Logo: La Primera Impresión que Perdura.'; 
+        let charIndex = 0;
+        const typingSpeed = 20;
+
+        function typeWriter() {
+            if (charIndex < textToType.length) {
+                titleElement.innerHTML = textToType.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
+                charIndex++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                titleElement.innerHTML = textToType; 
+                setTimeout(fadeInSubtexts, 500); 
+            }
+        }
+
+        function fadeInSubtexts() {
+            subtextsElement.classList.remove('opacity-0');
+            subtextsElement.classList.add('opacity-100');
+        }
+
+        // ====================================================================
+        // LÓGICA DEL WIZARD (Entrevista Paso a Paso)
+        // ====================================================================
+
+        let currentStep = 1;
+        const totalSteps = 5;
+        let stepElements;
+        let prevButton;
+        let nextButton;
+        let submitButton;
+
+        /**
+         * Maneja la selección y deselección de los botones de estilo (Paso 2).
+         */
+        function selectStyle(element) {
+            element.classList.toggle('selected');
+            updateStyleSelectionInput();
+        }
+
+        /**
+         * Actualiza el campo oculto 'style-selection' con los estilos seleccionados.
+         */
+        function updateStyleSelectionInput() {
+            const selectedButtons = document.querySelectorAll('#style-buttons-container .style-btn.selected');
+            const styleSelectionInput = document.getElementById('style-selection');
+            
+            const selectedStyles = Array.from(selectedButtons).map(btn => btn.getAttribute('data-style'));
+            
+            // Almacenar como cadena separada por comas (para validación y envío)
+            styleSelectionInput.value = selectedStyles.join(', ');
+        }
+
+
+        /**
+         * Muestra el paso actual del formulario y actualiza los botones y la barra de progreso.
+         */
+        function showStep(stepIndex) {
+            if (!stepElements) return;
+
+            // Ocultar todos los pasos y mostrar solo el actual
+            stepElements.forEach(step => {
+                step.classList.remove('active');
+            });
+            const activeStep = document.querySelector(`.form-step[data-step="${stepIndex}"]`);
+            if (activeStep) {
+                activeStep.classList.add('active');
+                
+                // Enfocar el primer input/textarea del paso (si existe)
+                const inputToFocus = activeStep.querySelector('input:not([type="hidden"]), textarea');
+                if (inputToFocus) {
+                    inputToFocus.focus();
+                }
+                
+                // Si es el paso 2, nos aseguramos de que el input oculto esté actualizado.
+                if (stepIndex === 2) {
+                    updateStyleSelectionInput();
+                }
+            }
+
+            // Lógica para la barra de progreso
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercentage = (stepIndex / totalSteps) * 100;
+            
+            if (progressFill) {
+                progressFill.style.width = `${progressPercentage}%`;
+                // Aplica el degradado de iluminación
+                progressFill.classList.add('bg-gradient-to-r', 'from-cyan-400', 'to-violet-500');
+            }
+
+
+            // Control de botones
+            prevButton.style.visibility = (stepIndex > 1) ? 'visible' : 'hidden';
+            
+            if (stepIndex === totalSteps) {
+                nextButton.classList.add('hidden');
+                submitButton.classList.remove('hidden');
+            } else {
+                nextButton.classList.remove('hidden');
+                submitButton.classList.add('hidden');
+            }
+        }
+        
+        /**
+         * Avanza al siguiente paso después de validar.
+         */
+        function nextStep() {
+            // Validación: Verificar que los campos requeridos del paso actual estén llenos
+            const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+            // Busca campos requeridos, incluyendo el input hidden de selección de estilos
+            const requiredInput = currentStepElement.querySelector('[required]');
+            
+            if (requiredInput && requiredInput.value.trim() === '') {
+                // Mensaje específico para el paso 2 (Estilos)
+                if (currentStep === 2) {
+                    // Usamos alertUser customizado para no usar el nativo alert()
+                    alertUser("¡Selección Requerida!", "Por favor, selecciona al menos un estilo de logo antes de continuar.", "Entendido");
+                } else {
+                    // Mensaje general para otros campos de texto
+                    alertUser("¡Espera!", "Por favor, completa este campo requerido antes de continuar.", "Continuar");
+                    requiredInput.focus();
+                }
+                return;
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        /**
+         * Regresa al paso anterior.
+         */
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        /**
+         * Transición directa a la vista de entregables.
+         */
+        function submitBrief() {
+            // Transición directa: Ocultar el formulario y mostrar la vista de entregables
+            document.getElementById('form-view').classList.add('hidden');
+            document.getElementById('deliverables-view').classList.remove('hidden'); 
+            
+            // Iniciar la animación escalonada de los entregables
+            document.querySelectorAll('#deliverables-view .stagger-item').forEach(item => {
+                // Forzamos un 'reflow' quitando y volviendo a agregar la clase para que la animación se dispare de nuevo
+                item.classList.remove('stagger-item');
+                void item.offsetWidth; 
+                item.classList.add('stagger-item');
+            });
+            
+            window.scrollTo(0, 0); // Ir al inicio de la nueva página
+            
+            // Resetear el wizard (no necesario ya que solo se envía el brief desde la vista de entregables)
+        }
+
+        /**
+         * Recopila todos los datos del brief y construye el enlace de WhatsApp.
+         */
+        function sendToWhatsApp() {
+            // 1. Recolección de Datos
+            const brandName = document.getElementById('brand-name').value || "No especificado";
+            const styles = document.getElementById('style-selection').value || "No especificado";
+            const colors = document.getElementById('colors').value || "No especificado";
+            const sector = document.getElementById('sector').value || "No especificado";
+            const briefAdicional = document.getElementById('brief-adicional').value || "Ningún detalle adicional proporcionado.";
+            
+            // 2. Construcción del mensaje (con saltos de línea codificados como \n)
+            const message = `
+*¡BRIEF DE MARCA FINALIZADO!*
+
+Hola, estoy listo/a para avanzar con mi proyecto de marca. Aquí está el resumen de mi brief inicial:
+
+1. NOMBRE DE MARCA: ${brandName}
+2. ESTILOS CLAVE: ${styles}
+3. COLORES PRINCIPALES: ${colors}
+4. SECTOR/NICHO: ${sector}
+
+5. *BRIEF ADICIONAL:* ${briefAdicional}
+
+Agradezco su revisión. Por favor, confírmenme los próximos pasos.`;
+
+            // 3. Codificación y Creación del Enlace
+            const encodedMessage = encodeURIComponent(message.trim());
+            const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            
+            // 4. Abrir WhatsApp
+            window.open(whatsappLink, '_blank');
+        }
+
+
+        /**
+         * Función de utilidad para mostrar un mensaje modal en lugar de alert()
+         */
+        function alertUser(title, message, buttonText) {
+            const container = document.createElement('div');
+            container.innerHTML = `
+                <div class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4" onclick="this.remove()">
+                    <div class="bg-gray-900 p-8 rounded-xl max-w-md w-full shadow-2xl border-t-4 border-cyan-400 transform transition-all duration-300 scale-100" onclick="event.stopPropagation()">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-4">${title}</h3>
+                        <p class="text-gray-300 mb-6">${message}</p>
+                        <button class="bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 px-6 rounded-lg w-full transition uppercase tracking-wider" onclick="this.closest('.fixed').remove()">
+                            ${buttonText}
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(container);
+        }
+
+        // Inicializar la animación y el wizard al cargar la página
+        window.onload = function() {
+            typeWriter();
+            
+            const landingView = document.getElementById('landing-page-view');
+            const formView = document.getElementById('form-view');
+            const ctaButton = document.getElementById('cta-button');
+            
+            stepElements = document.querySelectorAll('.form-step');
+            prevButton = document.getElementById('prev-step-button');
+            nextButton = document.getElementById('next-step-button');
+            submitButton = document.getElementById('submit-brief-button');
+
+
+            // 1. Cambiar la acción del CTA para mostrar el formulario
+            ctaButton.addEventListener('click', () => {
+                landingView.classList.add('hidden');
+                formView.classList.remove('hidden');
+                window.scrollTo(0, 0); 
+                currentStep = 1; // Asegurar que siempre inicie en el paso 1
+                showStep(currentStep); // Iniciar el wizard
+            });
+        };
+    </script>
+</body>
+</html>
