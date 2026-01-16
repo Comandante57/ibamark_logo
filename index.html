@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBAMARK | Brutalist Marketing</title>
+    <title>IBAMARK | Brutalist Marketing Agency</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
@@ -111,7 +111,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Custom Checkbox/Radio Styling */
         .package-option.selected {
             background-color: var(--main-color);
             box-shadow: inset 4px 4px 0 black;
@@ -139,6 +138,14 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -158,8 +165,8 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <div class="hidden md:block font-bold text-sm text-right">
-                EST. 2025 //<br>PUBLICIDAD & MARKETING
+            <div class="hidden md:block font-bold text-sm text-right uppercase">
+                Est. 2025 //<br>Marketing de Alto Impacto
             </div>
             
             <a href="https://www.instagram.com/ibamark_marketing/" target="_blank" aria-label="Instagram" class="brutal-btn !p-2 flex items-center justify-center bg-white text-black hover:text-black">
@@ -179,14 +186,14 @@
                 CREA.<br>ROMPE.<br>VENDE.
             </h2>
             <p class="text-lg font-bold mb-8 z-10">
-                No hacemos diseños bonitos.<br>
-                Hacemos marcas que venden.
+                No hacemos cosas "baratas".<br>
+                Construimos activos de negocio.
             </p>
             
             <div class="bg-white border-4 border-black p-4 brutal-shadow z-10 rotate-1">
-                <p class="font-bold underline">ESTADO DEL SERVIDOR:</p>
-                <p class="text-green-600 font-bold blink">● ONLINE</p>
-                <p class="mt-2 text-sm">Esperando tu proyecto...</p>
+                <p class="font-bold underline uppercase">Status de Agencia:</p>
+                <p class="text-green-600 font-bold blink">● OPERANDO CON ÉXITO</p>
+                <p class="mt-2 text-sm uppercase">Seleccionando proyectos premium...</p>
             </div>
         </aside>
 
@@ -194,92 +201,97 @@
             
             <div class="max-w-2xl w-full mx-auto">
                 <div class="mb-8 flex items-center justify-between border-b-4 border-black pb-2">
-                    <span class="font-bold text-xl">SOLICITUD DE PROYECTO</span>
-                    <span class="bg-black text-white px-2 py-1 font-bold" id="step-counter">PASO 1/6</span>
+                    <span class="font-bold text-xl uppercase">Briefing de Inversión</span>
+                    <span class="bg-black text-white px-2 py-1 font-bold" id="step-counter">PASO 1/7</span>
                 </div>
 
                 <form id="brutal-form" onsubmit="return false;">
                     
                     <div class="step-content fade-in" data-step="1">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">¿Cómo te llamas, colega?</label>
-                        <input type="text" id="nombre" class="brutal-input" placeholder="Escribe tu nombre aquí..." required autofocus>
-                        <p class="mt-2 text-gray-500 text-sm">// Identifícate para continuar.</p>
+                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">¿Quién lidera este proyecto?</label>
+                        <input type="text" id="nombre" class="brutal-input" placeholder="Nombre completo..." required autofocus>
+                        <p class="mt-2 text-gray-500 text-sm">// Identificación de socio.</p>
                     </div>
 
                     <div class="step-content hidden fade-in" data-step="2">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Nombre del proyecto</label>
-                        <input type="text" id="nombre_proyecto" class="brutal-input" placeholder="Ej: Taquería Los Primos" required>
-                        <p class="mt-2 text-gray-500 text-sm">// Si aún no tiene nombre, escribe "Pendiente".</p>
+                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Nombre de la marca</label>
+                        <input type="text" id="nombre_proyecto" class="brutal-input" placeholder="Nombre de tu negocio..." required>
+                        <p class="mt-2 text-gray-500 text-sm">// Si es confidencial, escribe "En desarrollo".</p>
                     </div>
 
                     <div class="step-content hidden fade-in" data-step="3">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Tu WhatsApp</label>
-                        <input type="tel" id="whatsapp" class="brutal-input" placeholder="55 1234 5678" required>
-                        <p class="mt-2 text-gray-500 text-sm">// Ahí te enviaremos la propuesta. Sin spam.</p>
+                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Línea directa (WhatsApp)</label>
+                        <input type="tel" id="whatsapp" class="brutal-input" placeholder="+52 ..." required>
+                        <p class="mt-2 text-gray-500 text-sm">// Solo para agendar llamada estratégica.</p>
                     </div>
 
                     <div class="step-content hidden fade-in" data-step="4">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">¿Qué industria es?</label>
-                        <input type="text" id="industria" class="brutal-input" placeholder="Ej: Restaurante, Tech, Ropa..." required>
+                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Sector del mercado</label>
+                        <input type="text" id="industria" class="brutal-input" placeholder="Ej: Real Estate, Pharma, Lujo..." required>
                     </div>
 
                     <div class="step-content hidden fade-in" data-step="5">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">¿Estado del proyecto?</label>
+                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Nivel del proyecto</label>
                         <div class="flex flex-col md:flex-row gap-4 mt-4">
                             <label class="flex-1 cursor-pointer">
-                                <input type="radio" name="tipo" value="Proyecto Nuevo" class="hidden" onchange="selectRadio(this)">
+                                <input type="radio" name="tipo" value="Lanzamiento Nuevo" class="hidden" onchange="selectRadio(this)">
                                 <div class="border-4 border-black p-6 hover:bg-[var(--main-color)] transition-colors h-full flex items-center justify-center text-center font-bold text-xl">
-                                    PROYECTO NUEVO
+                                    NUEVO LANZAMIENTO
                                 </div>
                             </label>
                             <label class="flex-1 cursor-pointer">
-                                <input type="radio" name="tipo" value="Rediseño" class="hidden" onchange="selectRadio(this)">
+                                <input type="radio" name="tipo" value="Reposicionamiento" class="hidden" onchange="selectRadio(this)">
                                 <div class="border-4 border-black p-6 hover:bg-[var(--main-color)] transition-colors h-full flex items-center justify-center text-center font-bold text-xl">
-                                    REDISEÑO
+                                    REPOSICIONAMIENTO
                                 </div>
                             </label>
                         </div>
                     </div>
 
                     <div class="step-content hidden fade-in" data-step="6">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">¿Qué personalidad debe tener tu marca?</label>
-                        <input type="text" id="personalidad" class="brutal-input" placeholder="Ej: Moderna, Disruptiva, Elegante..." required>
+                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Voz y Tono de la marca</label>
+                        <input type="text" id="personalidad" class="brutal-input" placeholder="Ej: Agresiva, Institucional, Disruptiva..." required>
                     </div>
 
                     <div class="step-content hidden fade-in" data-step="7">
-                        <label class="block text-2xl md:text-4xl font-bold mb-6 uppercase">Elige tu arma:</label>
+                        <label class="block text-2xl md:text-4xl font-bold mb-2 uppercase">Inversión Estimada:</label>
+                        <p class="text-sm text-gray-600 mb-6 font-bold">*Precios base sujetos a diagnóstico del proyecto.</p>
+                        
                         <div class="space-y-4 mt-4">
                             
                             <label class="block cursor-pointer group">
-                                <input type="radio" name="paquete" value="Solo Logo ($1,800-$3,500)" class="hidden" onchange="selectPackage(this)">
+                                <input type="radio" name="paquete" value="Identidad Core (Desde $5,000)" class="hidden" onchange="selectPackage(this)">
                                 <div class="package-option border-4 border-black p-4 flex justify-between items-center group-hover:translate-x-2 transition-transform">
                                     <div>
-                                        <h3 class="font-bold text-lg">SOLO LOGO</h3>
-                                        <span class="text-sm bg-black text-white px-1">BÁSICO</span>
+                                        <h3 class="font-bold text-lg uppercase">Identidad Core</h3>
+                                        <span class="text-xs bg-black text-white px-1 uppercase">Punto de Partida</span>
                                     </div>
-                                    <div class="font-bold text-xl">$1,800 - $3,500</div>
+                                    <div class="font-bold text-xl uppercase">Desde $5,000</div>
                                 </div>
                             </label>
 
                             <label class="block cursor-pointer group">
-                                <input type="radio" name="paquete" value="Logo + Apps ($3,500-$8,000)" class="hidden" onchange="selectPackage(this)">
+                                <input type="radio" name="paquete" value="Ecosistema Digital (Desde $9,000)" class="hidden" onchange="selectPackage(this)">
                                 <div class="package-option border-4 border-black p-4 flex justify-between items-center group-hover:translate-x-2 transition-transform">
                                     <div>
-                                        <h3 class="font-bold text-lg">LOGO + APPS BÁSICAS</h3>
-                                        <span class="text-sm bg-black text-white px-1">RECOMENDADO</span>
+                                        <h3 class="font-bold text-lg uppercase">Ecosistema Básico</h3>
+                                        <span class="text-xs bg-black text-white px-1 uppercase">Estándar Agencia</span>
                                     </div>
-                                    <div class="font-bold text-xl">$3,500 - $8,000</div>
+                                    <div class="font-bold text-xl uppercase">Desde $9,000</div>
                                 </div>
                             </label>
 
                             <label class="block cursor-pointer group">
-                                <input type="radio" name="paquete" value="Branding Completo ($10,000-$49,000)" class="hidden" onchange="selectPackage(this)">
+                                <input type="radio" name="paquete" value="Branding Completo (Desde $17,000 - $100,000)" class="hidden" onchange="selectPackage(this)">
                                 <div class="package-option border-4 border-black p-4 flex justify-between items-center group-hover:translate-x-2 transition-transform bg-gray-100">
                                     <div>
-                                        <h3 class="font-bold text-lg">BRANDING COMPLETO ⭐</h3>
-                                        <span class="text-sm bg-[var(--main-color)] text-black px-1 border border-black">EL JEFE</span>
+                                        <h3 class="font-bold text-lg uppercase">Branding Completo ⭐</h3>
+                                        <span class="text-xs bg-[var(--main-color)] text-black px-1 border border-black font-bold uppercase">Proyectos Premium</span>
                                     </div>
-                                    <div class="font-bold text-xl">$10k - $49k</div>
+                                    <div class="font-bold text-xl text-right uppercase">
+                                        Desde $17k<br>
+                                        <span class="text-sm font-normal">Hasta $100k</span>
+                                    </div>
                                 </div>
                             </label>
                         </div>
@@ -290,7 +302,7 @@
                             ← ATRÁS
                         </button>
                         <button type="button" id="nextBtn" class="brutal-btn flex-1 bg-black text-white hover:bg-gray-800 hover:text-white" onclick="changeStep(1)">
-                            SIGUIENTE →
+                            CONTINUAR →
                         </button>
                     </div>
 
@@ -301,12 +313,12 @@
 
     <footer class="marquee-container">
         <div class="marquee-content">
-             IBAMARK // DISEÑO SIN MIEDO // COTIZA AHORA // TRANSFORMAMOS TU NEGOCIO // IBAMARK // DISEÑO SIN MIEDO // COTIZA AHORA // TRANSFORMAMOS TU NEGOCIO //
+             IBAMARK // SOLUCIONES DE ALTO NIVEL // NO SOMOS BARATOS, SOMOS EFECTIVOS // MARKETING DE VERDAD // AGENCIA DE DISEÑO ESTRATÉGICO // IBAMARK //
         </div>
     </footer>
 
     <script>
-        // --- LOADER LOGIC ---
+        // --- LOADER ---
         document.addEventListener("DOMContentLoaded", () => {
             const bar = document.getElementById('bar');
             const percentage = document.getElementById('percentage');
@@ -321,23 +333,21 @@
                         loader.style.display = 'none';
                     }, 500);
                 } else {
-                    width += Math.floor(Math.random() * 10) + 1; 
+                    width += Math.floor(Math.random() * 15) + 5; 
                     if(width > 100) width = 100;
                     bar.style.width = width + '%';
                     percentage.innerText = width + '%';
                 }
-            }, 100);
+            }, 80);
         });
 
-        // --- FORM LOGIC ---
+        // --- FORM ---
         let currentStep = 1;
         const totalSteps = 7;
 
         function updateUI() {
-            // Update Step Counter
             document.getElementById('step-counter').innerText = `PASO ${currentStep}/${totalSteps}`;
             
-            // Show/Hide Steps
             document.querySelectorAll('.step-content').forEach(el => {
                 if(parseInt(el.dataset.step) === currentStep) {
                     el.classList.remove('hidden');
@@ -346,7 +356,6 @@
                 }
             });
 
-            // Update Buttons
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
 
@@ -359,17 +368,15 @@
             }
 
             if (currentStep === totalSteps) {
-                nextBtn.innerText = "ENVIAR WHATSAPP 🚀";
+                nextBtn.innerText = "AGENDAR CONSULTORÍA 🚀";
                 nextBtn.classList.add('bg-[var(--main-color)]', 'text-black');
                 nextBtn.classList.remove('bg-black', 'text-white');
-                nextBtn.style.borderColor = "black";
             } else {
-                nextBtn.innerText = "SIGUIENTE →";
+                nextBtn.innerText = "CONTINUAR →";
                 nextBtn.classList.remove('bg-[var(--main-color)]', 'text-black');
                 nextBtn.classList.add('bg-black', 'text-white');
             }
             
-            // Auto focus input if exists
             const currentInput = document.querySelector(`.step-content[data-step="${currentStep}"] input`);
             if(currentInput) currentInput.focus();
         }
@@ -379,14 +386,12 @@
             const inputs = stepEl.querySelectorAll('input');
             let isValid = true;
 
-            // Check text inputs
             inputs.forEach(input => {
                 if (input.type === 'text' || input.type === 'tel') {
                     if (input.value.trim() === "") isValid = false;
                 }
             });
 
-            // Check radio inputs (groups)
             const radios = stepEl.querySelectorAll('input[type="radio"]');
             if (radios.length > 0) {
                 const checked = Array.from(radios).some(r => r.checked);
@@ -394,15 +399,8 @@
             }
 
             if (!isValid) {
-                // Brutalist error shake
                 stepEl.classList.add('animate-bounce');
                 setTimeout(() => stepEl.classList.remove('animate-bounce'), 500);
-                
-                // Flash borders red
-                const container = document.querySelector('section');
-                container.style.backgroundColor = "#ffcccc";
-                setTimeout(() => container.style.backgroundColor = "white", 300);
-                
                 return false;
             }
             return true;
@@ -410,7 +408,7 @@
 
         function changeStep(direction) {
             if (direction === 1) {
-                if (!validateStep()) return; // Don't advance if invalid
+                if (!validateStep()) return;
                 if (currentStep === totalSteps) {
                     sendToWhatsApp();
                     return;
@@ -422,25 +420,17 @@
             updateUI();
         }
 
-        // Visual selection helpers for Radio Buttons
         function selectRadio(input) {
-            // Reset all styles in this group
             const groupName = input.name;
             document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
-                r.parentElement.querySelector('div').classList.remove('bg-[var(--main-color)]', 'shadow-[inset_0_0_0_4px_black]');
-                r.parentElement.querySelector('div').classList.add('hover:bg-[var(--main-color)]');
+                r.parentElement.querySelector('div').classList.remove('bg-[var(--main-color)]');
             });
-            
-            // Apply style to selected
-            const div = input.parentElement.querySelector('div');
-            div.classList.remove('hover:bg-[var(--main-color)]');
-            div.classList.add('bg-[var(--main-color)]');
+            input.parentElement.querySelector('div').classList.add('bg-[var(--main-color)]');
         }
 
         function selectPackage(input) {
             document.querySelectorAll('.package-option').forEach(el => {
                 el.classList.remove('selected');
-                el.classList.add('border-black'); // reset border color just in case
             });
             input.parentElement.querySelector('.package-option').classList.add('selected');
         }
@@ -458,17 +448,17 @@
             const paqueteEl = document.querySelector('input[name="paquete"]:checked');
             const paquete = paqueteEl ? paqueteEl.value : "No especificado";
 
-            const message = `👋 Hola IBAMARK, quiero cotizar un proyecto:
+            const message = `🔥 *SOLICITUD DE PROYECTO PREMIUM - IBAMARK*
 
-👤 *Nombre:* ${nombre}
-🚀 *Proyecto:* ${nombreProyecto}
-📱 *WhatsApp:* ${whatsapp}
-🏭 *Industria:* ${industria}
-🆕 *Tipo:* ${tipo}
-💡 *Personalidad:* ${personalidad}
-📦 *Paquete Interesado:* ${paquete}
+👤 *Socio:* ${nombre}
+🚀 *Marca:* ${nombreProyecto}
+📱 *Contacto:* ${whatsapp}
+🏭 *Sector:* ${industria}
+🎯 *Nivel:* ${tipo}
+💎 *Voz:* ${personalidad}
+💰 *Interés de Inversión:* ${paquete}
 
-_Enviado desde la web_`;
+_Este cliente busca una propuesta personalizada basada en estos rangos._`;
 
             const phone = "525572365913";
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
@@ -476,23 +466,16 @@ _Enviado desde la web_`;
             window.open(url, '_blank');
         }
 
-        // Handle Enter key for text inputs
         document.addEventListener('keydown', function(e) {
             if(e.key === 'Enter') {
-                 // Prevent default form submission
                 e.preventDefault();
-                // Only trigger next if it's not the last step (to prevent accidental sending)
                 if(currentStep < totalSteps) {
                     changeStep(1);
                 } else {
-                    // If last step, trigger send explicitly
                     if(validateStep()) sendToWhatsApp();
                 }
             }
         });
-
     </script>
 </body>
 </html>
-
-```
